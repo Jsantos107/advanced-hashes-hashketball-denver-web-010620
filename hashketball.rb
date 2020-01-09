@@ -1,5 +1,5 @@
 # Write your code here!
-require 'pry'
+require "pry"
 
 
 def game_hash
@@ -119,142 +119,192 @@ def game_hash
  }
 end
 
-
-
-def num_points_scored(players_name)
-   game_hash.each do |place, team|
-    team.each do |attribute, data|
-      
-      if attribute == :players
-        data.each do |player|
-          if player[:player_name] == players_name
-            return player[:points]
-          end
-        end
+def players
+  players=[]
+  game_hash.each do |location, team|
+    team[:players].each do |player|
+      players << player
       end
     end
-  end
+    players
 end
 
-
-
-def shoe_size(player_n)
-  game_hash.each do |game_hash, keys|
-    keys[:players].each do |player|
-      return player[:shoe] if player[:player_name] == player_n
-    end
-  end
+def find_player_by_name (player_name)
+  players.find do |player|
+player [:player_name]== player_name
+end
+end
+ 
+def num_points_scored(players_name)
+  player=find_player_by_name players_name
+   player[:points]  
 end
 
+def shoe_size(player_name)
+  player = find_player_by_name player_name
+  player[:shoe]
+end
+
+def find_teams_by_name (team_name)
+  teams.find do |team|
+    team[:team_name] == team_name
+  end
+  end  
+  
+def teams
+game_hash.values 
+end
 
 def team_colors(team_name)
-  game_hash.each do |game_hash, keys|
-    if keys[:team_name] == team_name
-      return keys[:colors].map(&:capitalize)
-    end
-  end
+  team = find_teams_by_name team_name
+  team [:colors]
 end
 
-
-def team_names
-  game_hash.map do |game_hash, keys|
-  keys[:team_name]
+def team_names 
+  
 end
-end
-
 
 def player_numbers(team_name)
-  game_hash.each do |game_hash, keys|
-    if keys[:team_name] == team_name
-      return keys[:players].map { |player| player[:number] }
-    end
-  end
-end
 
+end
 
 def player_stats(players_name)
-  new_hash = {}
-  game_hash.each do |place, team|
-    team.each do |attributes, data|
+
+end
+
+
+# def num_points_scored(players_name)
+#   game_hash.each do |place, team|
+#     team.each do |attribute, data|
       
-      if attributes == :players
-        data.each do |player|
-        
-      if player[:player_name] == players_name
-       new_hash = player.delete_if do |key, value|
-         key == :player_name 
-       end 
-      end
-    end
-  end
-end 
-end 
-return new_hash
-end 
-
-def big_shoe_rebounds
-  biggest = 0
-  rebounds = 0
-  game_hash.each do |game_hash, keys|
-    keys[:players].each do |player|
-      size = player[:shoe]
-      if size > biggest
-        biggest = size
-        rebounds = player[:rebounds]
-      end
-    end
-  end
-  rebounds
-end
-
-
-def most_points_scored
-  most_points = 0
-  mvp = ''
-  game_hash.each do |game_hash, keys|
-    keys[:players].each do |player|
-      points = player[:points]
-      if points > most_points
-        most_points = points
-        mvp = player[:player_name]
-      end
-    end
-  end
-  mvp
-end
-
-
-# def winning_team
-#   total_points = 0
-#   win_team = ''
-#   game_hash.each do |home_away, keys|
-#     team_name = game_hash[home_away][:team_name]
-#     keys[:players].each do |player|
-#       points = player[:points]
-#       team_points += points
+#       if attribute == :players
+#         data.each do |player|
+#           if player[:player_name] == players_name
+#             return player[:points]
+#           end
+#         end
+#       end
 #     end
-#     win_team, total_points = team_name, team_points if team_points > total_points
 #   end
-#   return win_team
+# end
+
+# def shoe_size(player_n)
+#   game_hash.each do |game_hash, keys|
+#     keys[:players].each do |player|
+#       return player[:shoe] if player[:player_name] == player_n
+#     end
+#   end
 # end
 
 
-def winning_team()
-home_points = 0
-away_points = 0
-win_team = ''
-  game_hash.each do |home_away, keys|
-          while home_away[:home] 
-          keys[:points] += home_points 
-          else home_away[:away] 
-            keys[:points] += away_points
-          end
+# def team_colors(team_name)
+#   game_hash.each do |game_hash, keys|
+#     if keys[:team_name] == team_name
+#       return keys[:colors].map(&:capitalize)
+#     end
+#   end
+# end
+
+
+# def team_names
+#   game_hash.map do |game_hash, keys|
+#   keys[:team_name]
+# end
+# end
+
+
+# def player_numbers(team_name)
+#   game_hash.each do |game_hash, keys|
+#     if keys[:team_name] == team_name
+#       return keys[:players].map { |player| player[:number] }
+#     end
+#   end
+# end
+
+
+# def player_stats(players_name)
+#   new_hash = {}
+#   game_hash.each do |place, team|
+#     team.each do |attributes, data|
+      
+#       if attributes == :players
+#         data.each do |player|
+        
+#       if player[:player_name] == players_name
+#       new_hash = player.delete_if do |key, value|
+#         key == :player_name 
+#       end 
+#       end
+#     end
+#   end
+# end 
+# end 
+# return new_hash
+# end 
+
+# def big_shoe_rebounds
+#   biggest = 0
+#   rebounds = 0
+#   game_hash.each do |game_hash, keys|
+#     keys[:players].each do |player|
+#       size = player[:shoe]
+#       if size > biggest
+#         biggest = size
+#         rebounds = player[:rebounds]
+#       end
+#     end
+#   end
+#   rebounds
+# end
+
+
+# def most_points_scored
+#   most_points = 0
+#   mvp = ''
+#   game_hash.each do |game_hash, keys|
+#     keys[:players].each do |player|
+#       points = player[:points]
+#       if points > most_points
+#         most_points = points
+#         mvp = player[:player_name]
+#       end
+#     end
+#   end
+#   mvp
+# end
+
+
+# # def winning_team
+# #   total_points = 0
+# #   win_team = ''
+# #   game_hash.each do |home_away, keys|
+# #     team_name = game_hash[home_away][:team_name]
+# #     keys[:players].each do |player|
+# #       points = player[:points]
+# #       team_points += points
+# #     end
+# #     win_team, total_points = team_name, team_points if team_points > total_points
+# #   end
+# #   return win_team
+# # end
+
+
+# def winning_team()
+# home_points = 0
+# away_points = 0
+# win_team = ''
+#   game_hash.each do |home_away, keys|
+#           while home_away[:home] 
+#           keys[:points] += home_points 
+#           else home_away[:away] 
+#             keys[:points] += away_points
+#           end
           
-          if home_points > away_points
-            win_team = home_away[:home][:team_name]
-          else
-             win_team = home_away[:away][:team_name]
-                end 
-              end
-              return win_team
-            end
+#           if home_points > away_points
+#             win_team = home_away[:home][:team_name]
+#           else
+#             win_team = home_away[:away][:team_name]
+#                 end 
+#               end
+#               return win_team
+#             end
